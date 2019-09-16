@@ -297,13 +297,13 @@ int curvesigs_fast_test(int silent)
   unsigned char privkey[32];
   unsigned char pubkey[32];
   unsigned char signature[64];
-  unsigned char msg[MSG_LEN];
+  unsigned char msg[200];
   unsigned char random[64];
 
   memset(privkey, 0, 32);
   memset(pubkey, 0, 32);
   memset(signature, 0, 64);
-  memset(msg, 0, MSG_LEN);
+  memset(msg, 0, 200);
   memset(random, 0, 64);
 
   privkey[8] = 189; /* just so there's some bits set */
@@ -312,12 +312,12 @@ int curvesigs_fast_test(int silent)
   /* Signature vector test */
   curve25519_keygen(pubkey, privkey);
 
-  curve25519_sign(signature, privkey, msg, MSG_LEN, random);
+  curve25519_sign(signature, privkey, msg, 200, random);
 
   TEST("Curvesig sign", memcmp(signature, signature_correct, 64) == 0);
-  TEST("Curvesig verify #1", curve25519_verify(signature, pubkey, msg, MSG_LEN) == 0);
+  TEST("Curvesig verify #1", curve25519_verify(signature, pubkey, msg, 200) == 0);
   signature[0] ^= 1;
-  TEST("Curvesig verify #2", curve25519_verify(signature, pubkey, msg, MSG_LEN) != 0);
+  TEST("Curvesig verify #2", curve25519_verify(signature, pubkey, msg, 200) != 0);
   return 0;
 }
 
@@ -337,13 +337,13 @@ int xeddsa_fast_test(int silent)
   unsigned char privkey[32];
   unsigned char pubkey[32];
   unsigned char signature[64];
-  unsigned char msg[MSG_LEN];
+  unsigned char msg[200];
   unsigned char random[64];
 
   memset(privkey, 0, 32);
   memset(pubkey, 0, 32);
   memset(signature, 0, 64);
-  memset(msg, 0, MSG_LEN);
+  memset(msg, 0, 200);
   memset(random, 0, 64);
 
   privkey[8] = 189; /* just so there's some bits set */
@@ -352,13 +352,13 @@ int xeddsa_fast_test(int silent)
   /* Signature vector test */
   curve25519_keygen(pubkey, privkey);
 
-  xed25519_sign(signature, privkey, msg, MSG_LEN, random);
+  xed25519_sign(signature, privkey, msg, 200, random);
   TEST("XEdDSA sign", memcmp(signature, signature_correct, 64) == 0);
-  TEST("XEdDSA verify #1", xed25519_verify(signature, pubkey, msg, MSG_LEN) == 0);
+  TEST("XEdDSA verify #1", xed25519_verify(signature, pubkey, msg, 200) == 0);
   signature[0] ^= 1;
-  TEST("XEdDSA verify #2", xed25519_verify(signature, pubkey, msg, MSG_LEN) != 0);
+  TEST("XEdDSA verify #2", xed25519_verify(signature, pubkey, msg, 200) != 0);
   memset(pubkey, 0xFF, 32);
-  TEST("XEdDSA verify #3", xed25519_verify(signature, pubkey, msg, MSG_LEN) != 0);
+  TEST("XEdDSA verify #3", xed25519_verify(signature, pubkey, msg, 200) != 0);
   return 0;
 }
 

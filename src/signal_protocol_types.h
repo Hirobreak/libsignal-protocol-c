@@ -1,15 +1,11 @@
 #ifndef SIGNAL_PROTOCOL_TYPES_H
 #define SIGNAL_PROTOCOL_TYPES_H
 
+#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 
-#ifndef _WINDOWS
-#include <unistd.h>
-#else
 #include <basetsd.h>
-typedef SSIZE_T ssize_t;
-#endif
 
 #ifdef __cplusplus
 extern "C" {
